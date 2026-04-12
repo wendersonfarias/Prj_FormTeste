@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { PaginaCabecalhoComponent } from './components/pagina-cabecalho/pagina-cabecalho.component';
+import { PaginaFormularioComponent } from './components/pagina-formulario/pagina-formulario.component';
+import { PaginaRodapeComponent } from './components/pagina-rodape/pagina-rodape.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, PaginaCabecalhoComponent, PaginaFormularioComponent, PaginaRodapeComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

@@ -1,0 +1,19 @@
+.example-full-width{
+    align-items: center;
+    display: flex;
+    margin: 0 auto;
+    max-width: 500px;
+}
+
+.divisor{
+    max-width: 500px;
+    align-items: center;
+    display: flex;
+}
+
+.botoes{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
