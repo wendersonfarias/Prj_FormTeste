@@ -47,8 +47,7 @@ export class PaginaFormularioComponent {
     this.transportadoraValue.cnpj = this.cnpj.value ?? '';
     this.transportadoraValue.nome = this.nome.value ?? '';
     this.transportadoraValue.email = this.email.value ?? '';
-    
-    console.table(this.transportadoraValue);
+
   }
 
   ClickAoLimpar(): void{
