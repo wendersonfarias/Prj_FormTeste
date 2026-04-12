@@ -2,16 +2,16 @@
 
     <mat-form-field class="example-full-width">
         <mat-label>CNPJ</mat-label>
-        <input matInput id="cnpj" name="cnpj" placeholder="Ex. 00.000.000/0000-00">
+        <input matInput id="cnpj" [formControl]="cnpj" name="cnpj" (focusout)="validCNPJInput()" placeholder="Ex. 00.000.000/0000-00">
     </mat-form-field>
     <mat-form-field class="example-full-width">
         <mat-label>Nome</mat-label>
-        <input matInput id="nome" name="nome" placeholder="Ex. João da Silva">
+        <input matInput id="nome" name="nome" [formControl]="nome" placeholder="Ex. João da Silva">
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
         <mat-label>Email</mat-label>
-        <input type="email" matInput id="email" name="email" placeholder="Ex. pat@example.com">
+        <input type="email" matInput id="email" name="email" [formControl]="email" placeholder="Ex. pat@example.com">
     </mat-form-field>
 
 </form>
@@ -21,6 +21,6 @@
 </div>
 
 <div class="botoes">
-    <button mat-flat-button color="primary">Confirmar</button>
-    <button mat-flat-button color="warn">Limpar</button>
+    <button mat-flat-button color="primary" (click)="ClickAoConfirmar()">Confirmar</button>
+    <button mat-flat-button color="warn" (click)="ClickAoLimpar()">Limpar</button>
 </div>
