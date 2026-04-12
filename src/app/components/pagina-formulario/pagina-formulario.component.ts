@@ -5,6 +5,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormControl } from '@angular/forms';
+
+import { Transportadora } from '../../Transportadora';
+
 @Component({
   selector: 'app-pagina-formulario',
   standalone: true,
@@ -20,6 +23,12 @@ import { FormControl } from '@angular/forms';
 })
 export class PaginaFormularioComponent {
 
+  transportadoraValue: Transportadora = {
+    cnpj: '',
+    nome: '',
+    email: ''
+  };
+
   cnpj = new FormControl('');
   nome = new FormControl('');
   email = new FormControl('');
@@ -31,19 +40,15 @@ export class PaginaFormularioComponent {
   }
 
   ClickAoConfirmar(): void{
-    console.log(this.cnpj.value);
-    console.log(this.nome.value);
-    console.log(this.email.value);
     
-
-    //adicionar em um objeto
-    const formData = {
-      cnpj: this.cnpj.value,
-      nome: this.nome.value,
-      email: this.email.value
-    };
-    console.table(formData);
-
+    alert("CNPJ: " + this.cnpj.value + "\nNome: " + this.nome.value + "\nEmail: " + this.email.value);
+    
+    //Preenchendo o objeto transportadoraValue com os valores dos campos do formulário
+    this.transportadoraValue.cnpj = this.cnpj.value ?? '';
+    this.transportadoraValue.nome = this.nome.value ?? '';
+    this.transportadoraValue.email = this.email.value ?? '';
+    
+    console.table(this.transportadoraValue);
   }
 
   ClickAoLimpar(): void{
