@@ -1,26 +1,39 @@
 <form class="formulario">
+  <mat-form-field class="example-full-width">
+    <mat-label>CNPJ</mat-label>
+    <input
+      matInput
+      id="cnpj"
+      [formControl]="cnpj"
+      name="cnpj"
+      (focusout)="validCNPJInput()"
+      mask="00.000.000/0000-00"
+      placeholder="Ex. 00.000.000/0000-00"
+    />
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Nome</mat-label>
+    <input matInput id="nome" name="nome" [formControl]="nome" placeholder="Ex. João da Silva" />
+  </mat-form-field>
 
-    <mat-form-field class="example-full-width">
-        <mat-label>CNPJ</mat-label>
-        <input matInput id="cnpj" [formControl]="cnpj" name="cnpj" (focusout)="validCNPJInput()" placeholder="Ex. 00.000.000/0000-00">
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
-        <mat-label>Nome</mat-label>
-        <input matInput id="nome" name="nome" [formControl]="nome" placeholder="Ex. João da Silva">
-    </mat-form-field>
-
-    <mat-form-field class="example-full-width">
-        <mat-label>Email</mat-label>
-        <input type="email" matInput id="email" name="email" [formControl]="email" placeholder="Ex. pat@example.com">
-    </mat-form-field>
-
+  <mat-form-field class="example-full-width">
+    <mat-label>Email</mat-label>
+    <input
+      type="email"
+      matInput
+      id="email"
+      name="email"
+      [formControl]="email"
+      placeholder="Ex. pat@example.com"
+    />
+  </mat-form-field>
 </form>
 
 <div class="divisor">
-    <mat-divider></mat-divider>
+  <mat-divider></mat-divider>
 </div>
 
 <div class="botoes">
-    <button mat-flat-button color="primary" (click)="ClickAoConfirmar()">Confirmar</button>
-    <button mat-flat-button color="warn" (click)="ClickAoLimpar()">Limpar</button>
+  <button mat-flat-button color="primary" (click)="ClickAoConfirmar()">Confirmar</button>
+  <button mat-flat-button color="warn" (click)="ClickAoLimpar()">Limpar</button>
 </div>
