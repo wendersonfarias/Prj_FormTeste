@@ -12,6 +12,7 @@ import { TokenError } from '../models/token-error.model';
 import { RespostaApi } from '../models/resposta-api.model';
 import { RespostaApiGenerica } from '../models/respota-api-generica.model';
 import { NgxMaskDirective } from 'ngx-mask';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-pagina-formulario',
@@ -28,7 +29,10 @@ import { NgxMaskDirective } from 'ngx-mask';
   styleUrl: './pagina-formulario.component.css',
 })
 export class PaginaFormularioComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+  ) {}
 
   cnpj = new FormControl('');
   nome = new FormControl('');
@@ -41,7 +45,8 @@ export class PaginaFormularioComponent implements OnInit {
   };
 
   //Dados Para Autenticação no Protheus
-
+  private usuario: string = 'wenderson.farias';
+  private senha: string = 'wenderson1@A';
   private bearerToken: string = '';
 
   baseHeaders = new HttpHeaders()
@@ -50,35 +55,18 @@ export class PaginaFormularioComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('Página de Formulário Inicializada');
-    this.generateToken();
-  }
-
-  //Gerar o token de autenticação para acessar a API do Protheus
-  private generateToken(): void {
-    this.http
-      .post<TokenResponse>(
-        'http://192.168.200.225:9900/rest/api/oauth2/v1/token',
-        {},
-        {
-          params: {
-            grant_type: 'password',
-            username: this.usuario,
-            password: this.senha,
-          },
-        },
-      )
-      .subscribe({
-        next: (res) => {
-          this.bearerToken = res.access_token;
-          console.log('Token:', this.bearerToken);
-        },
-        error: (err) => {
-          const apiError = err.error as TokenError;
-          console.log('Erro Código:', apiError.code);
-          console.log('Erro Mensagem:', apiError.message);
-          console.log('Erro Detalhe:', apiError.detailMessage);
-        },
-      });
+    this.authService.login().subscribe({
+      next: (res) => {
+        this.authService.setTokens(res.access_token, res.refresh_token);
+        console.log('Token inicial carregado');
+      },
+      error: (err) => {
+        const apiError = err.error as TokenError;
+        console.log('Erro Código:', apiError.code);
+        console.log('Erro Mensagem:', apiError.message);
+        console.log('Erro Detalhe:', apiError.detailMessage);
+      },
+    });
   }
 
   validCNPJInput(): void {
@@ -90,7 +78,6 @@ export class PaginaFormularioComponent implements OnInit {
         .get<TransportadoraAPI>(
           'http://192.168.200.225:9900/rest/WSTransport/transportadora/get_id',
           {
-            headers: this.baseHeaders.set('Authorization', `Bearer ${this.bearerToken}`),
             params: { id: this.cnpj.value ?? '' },
           },
         )
@@ -121,7 +108,6 @@ export class PaginaFormularioComponent implements OnInit {
         'http://192.168.200.225:9900/rest/WSTransport/transportadora',
         this.preencherTransportadora(), //body da requisição com os dados da transportadora
         {
-          headers: this.baseHeaders.set('Authorization', `Bearer ${this.bearerToken}`),
           params: { id: this.cnpj.value ?? '' },
         },
       )
