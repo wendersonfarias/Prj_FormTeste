@@ -30,11 +30,23 @@ export class AuthService {
     localStorage.removeItem(this.REFRESH);
   }
 
+  login() {
+    return this.http.post<TokenResponse>(
+      'http://192.168.200.225:9900/rest/api/oauth2/v1/token',
+      {},
+      {
+        params: {
+          grant_type: 'password',
+        },
+      },
+    );
+  }
+
   refreshToken() {
     const refreshToken = this.getRefreshToken();
 
     return this.http.post<TokenResponse>(
-      '192.168.200.225:9900/rest/api/oauth2/v1/token',
+      'http://192.168.200.225:9900/rest/api/oauth2/v1/token',
       {},
       {
         params: {
