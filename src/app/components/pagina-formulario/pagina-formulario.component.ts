@@ -13,6 +13,7 @@ import { RespostaApi } from '../models/resposta-api.model';
 import { RespostaApiGenerica } from '../models/respota-api-generica.model';
 import { NgxMaskDirective } from 'ngx-mask';
 import { AuthService } from '../services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-pagina-formulario',
@@ -32,6 +33,7 @@ export class PaginaFormularioComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private authService: AuthService,
+    private snackBar: MatSnackBar,
   ) {}
 
   cnpj = new FormControl('');
@@ -65,6 +67,9 @@ export class PaginaFormularioComponent implements OnInit {
         console.log('Erro Código:', apiError.code);
         console.log('Erro Mensagem:', apiError.message);
         console.log('Erro Detalhe:', apiError.detailMessage);
+        this.snackBar.open(`${apiError.message}`, 'OK', {
+          duration: 3000,
+        });
       },
     });
   }
@@ -83,7 +88,9 @@ export class PaginaFormularioComponent implements OnInit {
         )
         .subscribe({
           next: (res) => {
-            console.log('Resposta da API:', res);
+            this.snackBar.open('Transportadora carregada!', 'OK', {
+              duration: 5000,
+            });
             this.mapTransportadora(res);
           },
           error: (err) => {
@@ -93,9 +100,15 @@ export class PaginaFormularioComponent implements OnInit {
               console.log('Erro ID:', respostaApiError.errorId);
               console.log('Erro:', respostaApiError.error);
               console.log('Solução:', respostaApiError.solution);
+              this.snackBar.open(`${respostaApiError.error}`, 'OK', {
+                duration: 3000,
+              });
             } else if (err.code === 401) {
               const errorAuth = err.error as RespostaApiGenerica;
               console.log('Erro de Autenticação:', errorAuth.message);
+              this.snackBar.open(`${errorAuth.message}`, 'OK', {
+                duration: 3000,
+              });
             }
           },
         });
@@ -114,6 +127,9 @@ export class PaginaFormularioComponent implements OnInit {
       .subscribe({
         next: (res: RespostaApiGenerica) => {
           console.log('Resposta da API:', res.message);
+          this.snackBar.open(`${res.message}`, 'OK', {
+            duration: 3000,
+          });
           this.LimparCampos();
         },
         error: (err) => {
@@ -123,9 +139,15 @@ export class PaginaFormularioComponent implements OnInit {
             console.log('Erro ID:', respostaApiError.errorId);
             console.log('Erro:', respostaApiError.error);
             console.log('Solução:', respostaApiError.solution);
+            this.snackBar.open(`${respostaApiError.error}`, 'OK', {
+              duration: 3000,
+            });
           } else if (err.code === 401) {
             const errorAuth = err.error as RespostaApiGenerica;
             console.log('Erro de Autenticação:', errorAuth.message);
+            this.snackBar.open(`${errorAuth.message}`, 'OK', {
+              duration: 3000,
+            });
           }
         },
       });
